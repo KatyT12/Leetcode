@@ -83,3 +83,34 @@ public:
         }
     }
 };
+
+
+/*LESSON: THINK HARD ABOUT THE GREEDY CHOICE: THIS TIME IT IS THE LONGEST TAP THAT COVERS WHAT WE NEED IT TO
+This is a more optimal solution. See, first it will generate an array that shows for each index the taps that start
+there and how far they can reach to. Then go through it and whenever we reach an end we increment counter. You can see how this covers gaps.
+See this recovers no information about the taps used but it doesn't have to.
+
+class Solution {
+public:
+    int minTaps(int n, vector<int>& ranges) {
+        vector<int> arr(n + 1, 0);
+        for(int i = 0; i < ranges.size(); ++i) {
+            if(ranges[i] == 0) continue;
+            int left = max(0, i - ranges[i]);
+            arr[left] = max(arr[left], i + ranges[i]);
+        }
+
+        int end = 0, far_can_reach = 0, cnt = 0;
+        for(int i = 0; i <= n; ++i) {
+            if(i > end) {
+                if(far_can_reach <= end) return -1;
+                end = far_can_reach;
+                ++cnt;
+            }
+            far_can_reach = max(far_can_reach, arr[i]);
+        }
+
+        return cnt + (end < n);
+    }
+};
+*/
